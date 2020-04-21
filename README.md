@@ -79,7 +79,7 @@ export class BangoodLuosimao {
 $ node src/index.js
 ```
 然后我们会发现，报错了`'SyntaxError: Unexpected token import'`,这是因为我们代码中用到了一些新的ES6特性，所以我们需要使用`Babel`对我们编写的ES6进行转换，`Babel`主要用于将 ECMAScript 2015+ 版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中。
-4.添加ES6支持
+## 4.添加ES6支持
 我们先安装Babel需要的依赖：
 
 ```bash
@@ -111,4 +111,41 @@ $ npm install --save-dev @babel/core @babel/cli @babel/preset-env @babel/plugin-
 $ npm run build
 ```
 我们会发现Babel将我们的ES6代码转换为通用的JS代码，并输出到`'dist/index.js'`文件。
+
+到此，我们编写了逻辑代码，并将其转换为通用代码，可是我们怎么知道我们的代码有没有问题，是否能按照我们的预期执行呢？
+## 5.添加测试代码
+我们使用`Mocha`+`Chai`来做单元测试：
+```bash
+$ npm install -D mocha chai
+```
+在`src`目录下创建`index.test.js`文件，并添加测试代码：
+```javascript
+import {assert, expect, should} from 'chai'
+import { BangoodLuosimao} from './index.js'
+describe("Bangood-luosimao",()=>{
+    describe("测试sendSms",()=>{
+        it("should done",(done)=>{
+            done();
+        })
+    })
+})
+```
+测试代码也是ES6编写的，所以需要安装`@babel/register`依赖来支持。
+
+在`pacage.json`文件新添加一个scripts命令:
+```bash
+"scripts": {
+    ...
+    "build": "babel src -d dist",
+    "test": "mocha src/index.test.js --require @babel/register"
+  }
+```
+执行：
+```bash
+$ npm test
+```
+会看到我们的测试代码通过了，当然，现在测试代码里面什么都没有，现在只是搭个架子在这里。
+
+
+
 
