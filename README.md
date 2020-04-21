@@ -146,6 +146,25 @@ $ npm test
 ```
 会看到我们的测试代码通过了，当然，现在测试代码里面什么都没有，现在只是搭个架子在这里。
 
+我们每次提交代码前，都要测试一下代码，这样重复的工作我们当然要想办法简化。
+```bash
+$ npm install -D ghooks
+```
+并在`pacage.json`文件添加配置：
+```bash
+"config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    },
+    "ghooks": {
+      "pre-commit": "npm test"
+    }
+  },
+```
+这样当我们执行`npm run commit`的时候就会自动测试代码了。
+
+
+
 
 
 
