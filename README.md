@@ -79,6 +79,36 @@ export class BangoodLuosimao {
 $ node src/index.js
 ```
 然后我们会发现，报错了`'SyntaxError: Unexpected token import'`,这是因为我们代码中用到了一些新的ES6特性，所以我们需要使用`Babel`对我们编写的ES6进行转换，`Babel`主要用于将 ECMAScript 2015+ 版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中。
+4.添加ES6支持
+我们先安装Babel需要的依赖：
 
+```bash
+$ npm install --save-dev @babel/core @babel/cli @babel/preset-env @babel/plugin-transform-runtime @babel/plugin-transform-async-to-generator @babel/plugin-syntax-dynamic-import
+```
+在根目录下创建名为`.babelrc`的`Babel`配置文件:
 
+```bash
+{
+    "presets": [
+        "@babel/preset-env"
+    ],
+    "plugins": [
+        "@babel/plugin-transform-runtime",
+        "@babel/plugin-transform-async-to-generator",
+        "@babel/plugin-syntax-dynamic-import"
+    ]
+}
+```
+在`pacage.json`文件新添加一个scripts命令:
+```bash
+"scripts": {
+    "commit": "git-cz",
+    "build": "babel src -d dist"
+  }
+```
+当我们执行：
+```bash
+$ npm run build
+```
+我们会发现Babel将我们的ES6代码转换为通用的JS代码，并输出到`'dist/index.js'`文件。
 
